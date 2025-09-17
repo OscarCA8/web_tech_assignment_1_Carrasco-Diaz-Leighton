@@ -1,0 +1,19 @@
+Members:
+Oscar Carrasco Alvarez
+Cristóbal Diaz Barra
+Nicolas Leighton Encina
+
+FitChallenge User stories
+
+Note: a user is any person who has an account on FitChallenge, while a participant is a user who joined a specific challenge.
+
+- As a user, I want to create an account, so that I can participate in fitness or habit challenges.
+- As a user, I want to update my profile information, so that I can personalize my account.
+- As a user, I want to join a challenge, so that I can see my progress while earning points
+- As a challenge creator, I want to create a new challenge, so that other users can participate and be part of it.
+- As a user, I want to see detailed information about a challenge, so that I can understand the challenge rules, goals, start and end dates.
+- As a challenge creator, I want to set the challenge name, description, duration, and point rules so participants know how to participate in the challenge.
+- As a participant, I want to earn badges for specific achievements, so that I feel rewarded for my efforts.
+- As a participant, I want to see the leaderboard for a challenge, so that I can compare my progress with others and stay motivated.
+- As a participant, I want to receive a notification when someone logs a high-scoring entry, so I feel motivated to keep up.
+- As a participant, I want to view a history of all my logged entries, so that I can track my effort over time.
