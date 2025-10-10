@@ -1,2 +1,18 @@
-<h1>Badges#index</h1>
-<p>Find me in app/views/badges/index.html.erb</p>
+<h1 class="mb-4">Badges</h1>
+<div class="row">
+  <% @badges.each do |badge| %>
+    <div class="col-md-4 mb-3">
+      <div class="card h-100">
+        <% if badge.logo.present? %>
+          <img src="<%= badge.logo %>" class="card-img-top p-3" alt="<%= badge.name %>">
+        <% end %>
+        <div class="card-body">
+          <h5 class="card-title"><%= link_to badge.name, badge, class: "stretched-link text-decoration-none" %></h5>
+          <p class="card-text small text-muted mb-1"><strong>Type:</strong> <%= badge.badge_type %></p>
+          <p class="card-text"><%= badge.description %></p>
+          <p class="card-text small"><strong>Requirement:</strong> <%= badge.requirement %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

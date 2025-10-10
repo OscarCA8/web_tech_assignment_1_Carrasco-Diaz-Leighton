@@ -1,2 +1,12 @@
-<h1>ProgressEntries#show</h1>
-<p>Find me in app/views/progress_entries/show.html.erb</p>
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h3>Progress Entry</h3>
+    <p><strong>Date:</strong> <%= @progress_entry.date %></p>
+    <p><strong>User:</strong> <%= link_to @progress_entry.user.name, @progress_entry.user %></p>
+    <p><strong>Challenge:</strong> <%= link_to @progress_entry.challenge.name, @progress_entry.challenge %></p>
+    <p><strong>Points:</strong> <%= @progress_entry.points %></p>
+    <p><strong>Description:</strong> <%= @progress_entry.description %></p>
+
+    <%= link_to "Back", progress_entries_path, class: "btn btn-outline-secondary mt-3" %>
+  </div>
+</div>

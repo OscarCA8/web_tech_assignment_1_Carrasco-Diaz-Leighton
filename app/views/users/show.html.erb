@@ -1,2 +1,33 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h3><%= @user.name %></h3>
+    <p>
+      <strong>Admin:</strong> <%= @user.is_admin ? "Yes" : "No" %><br>
+      <strong>Nationality:</strong> <%= @user.nationality %><br>
+      <strong>Birthday:</strong> <%= @user.birthday %>
+    </p>
+
+    <h5 class="mt-4">Participations</h5>
+    <table class="table table-sm table-bordered">
+      <thead class="table-light"><tr><th>Challenge</th><th>Points</th><th>Joined</th></tr></thead>
+      <tbody>
+        <% @participations.each do |p| %>
+          <tr>
+            <td><%= link_to p.challenge.name, p.challenge %></td>
+            <td><%= p.points %></td>
+            <td><%= p.date_start %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <% if @badges.any? %>
+      <h5 class="mt-4">Badges</h5>
+      <% @badges.each do |b| %>
+        <span class="badge bg-info text-dark me-1"><%= link_to b.name, b, class: "text-dark text-decoration-none" %></span>
+      <% end %>
+    <% end %>
+
+    <%= link_to "Back", users_path, class: "btn btn-outline-secondary mt-3" %>
+  </div>
+</div>

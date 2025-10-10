@@ -1,2 +1,30 @@
-<h1>Challenges#show</h1>
-<p>Find me in app/views/challenges/show.html.erb</p>
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h3><%= @challenge.name %></h3>
+    <p class="text-muted"><%= @challenge.try(:creator)&.try(:name) %></p>
+    <p><%= @challenge.description %></p>
+    <p><strong>Dates:</strong> <%= @challenge.start_day %> → <%= @challenge.end_day %></p>
+
+    <% if @badges.any? %>
+      <h5 class="mt-4">Badges</h5>
+      <% @badges.each do |b| %>
+        <span class="badge bg-info text-dark me-1"><%= link_to b.name, b, class: "text-dark text-decoration-none" %></span>
+      <% end %>
+    <% end %>
+
+    <h5 class="mt-4">Participants</h5>
+    <table class="table table-striped table-sm">
+      <thead><tr><th>User</th><th>Points</th></tr></thead>
+      <tbody>
+        <% @participants.each do |p| %>
+          <tr>
+            <td><%= p.user.name %></td>
+            <td><%= p.points %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= link_to "Back", challenges_path, class: "btn btn-outline-secondary mt-3" %>
+  </div>
+</div>

@@ -1,2 +1,26 @@
-<h1>ProgressEntries#index</h1>
-<p>Find me in app/views/progress_entries/index.html.erb</p>
+<h1 class="mb-4">Progress Entries</h1>
+
+<table class="table table-hover align-middle">
+  <thead class="table-light">
+    <tr>
+      <th>Date</th>
+      <th>User</th>
+      <th>Challenge</th>
+      <th>Points</th>
+      <th>Description</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @progress_entries.each do |e| %>
+      <tr>
+        <td><%= e.date %></td>
+        <td><%= e.user.name %></td>
+        <td><%= link_to e.challenge.name, e.challenge %></td>
+        <td><%= e.points %></td>
+        <td><%= e.description %></td>
+        <td><%= link_to "View", e, class: "btn btn-sm btn-outline-primary" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,2 +1,24 @@
-<h1>Users#index</h1>
-<p>Find me in app/views/users/index.html.erb</p>
+<h1 class="mb-4">Users</h1>
+
+<table class="table table-bordered table-striped align-middle">
+  <thead class="table-light">
+    <tr>
+      <th>Name</th>
+      <th>Admin</th>
+      <th>Nationality</th>
+      <th>Birthday</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |u| %>
+      <tr>
+        <td><%= u.name %></td>
+        <td><%= u.is_admin ? "Yes" : "No" %></td>
+        <td><%= u.nationality %></td>
+        <td><%= u.birthday %></td>
+        <td><%= link_to "View", u, class: "btn btn-sm btn-outline-primary" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

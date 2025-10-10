@@ -1,2 +1,28 @@
-<h1>Badges#show</h1>
-<p>Find me in app/views/badges/show.html.erb</p>
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h3><%= @badge.name %></h3>
+    <% if @badge.logo.present? %>
+      <img src="<%= @badge.logo %>" alt="<%= @badge.name %>" class="img-fluid mb-3" style="max-width:100px;">
+    <% end %>
+
+    <p><strong>Type:</strong> <%= @badge.badge_type %></p>
+    <p><%= @badge.description %></p>
+    <p><strong>Requirement:</strong> <%= @badge.requirement %></p>
+
+    <h5 class="mt-4">Users with this badge</h5>
+    <ul>
+      <% @users.each do |u| %>
+        <li><%= link_to u.name, u %></li>
+      <% end %>
+    </ul>
+
+    <h5 class="mt-4">Challenges using this badge</h5>
+    <ul>
+      <% @challenges.each do |c| %>
+        <li><%= link_to c.name, c %></li>
+      <% end %>
+    </ul>
+
+    <%= link_to "Back", badges_path, class: "btn btn-outline-secondary mt-3" %>
+  </div>
+</div>
