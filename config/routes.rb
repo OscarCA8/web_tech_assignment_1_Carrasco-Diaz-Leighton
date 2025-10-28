@@ -11,11 +11,24 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  resources :users, only: [:index, :show]
-  resources :challenges, only: [:index, :show]
-  resources :badges, only: [:index, :show]
-  resources :participations, only: [:index]
-  resources :progress_entries, only: [:index, :show]
-  resources :notifications, only: [:index, :show]
+  resources :users, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  resources :challenges do
+    resources :progress_entries, only: [:index, :new, :create]
+    resources :challenge_badges, only: [:index]
+    member do
+      post :join
+      delete :leave
+    end
+  end
+
+  resources :progress_entries, only: [:show, :edit, :update, :destroy]
+  resources :badges
+  resources :participations
+  resources :user_badges, only: [:index]
+  resources :notifications, only: [:index, :show, :destroy]
   root "challenges#index"
+
+  get "/login", to: "sessions#new"
+  post "/login", to: "sessions#create"
+  delete "/logout", to: "sessions#destroy"
 end

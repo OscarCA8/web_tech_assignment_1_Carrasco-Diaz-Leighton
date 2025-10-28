@@ -21,13 +21,14 @@
       </tbody>
     </table>
 
-    <% if @badges.any? %>
+    <% if @user_badges.any? %>
       <h5 class="mt-4">Badges</h5>
-      <% @badges.each do |b| %>
-        <span class="badge bg-info text-dark me-1"><%= link_to b.name, b, class: "text-dark text-decoration-none" %></span>
+      <% @user_badges.each do |ub| %>
+        <span class="badge bg-info text-dark me-1"><%= link_to ub.badge.name, ub.badge, class: "text-dark text-decoration-none" %></span>
       <% end %>
     <% end %>
 
+    <%= link_to "Edit", edit_user_path(@user), class: "btn btn-warning" %>
     <%= link_to "Back", users_path, class: "btn btn-outline-secondary mt-3" %>
   </div>
 </div>

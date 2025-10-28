@@ -1,23 +1,30 @@
-<h1 class="mb-4">Users</h1>
+<h1>Users</h1>
+<%= link_to "New User", new_user_path, class: "btn btn-primary mb-3" %>
 
-<table class="table table-bordered table-striped align-middle">
-  <thead class="table-light">
+<table class="table table-striped">
+  <thead>
     <tr>
       <th>Name</th>
-      <th>Admin</th>
-      <th>Nationality</th>
       <th>Birthday</th>
-      <th></th>
+      <th>Nationality</th>
+      <th>Gender</th>
+      <th>Admin?</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
-    <% @users.each do |u| %>
+    <% @users.each do |user| %>
       <tr>
-        <td><%= u.name %></td>
-        <td><%= u.is_admin ? "Yes" : "No" %></td>
-        <td><%= u.nationality %></td>
-        <td><%= u.birthday %></td>
-        <td><%= link_to "View", u, class: "btn btn-sm btn-outline-primary" %></td>
+        <td><%= user.name %></td>
+        <td><%= user.birthday %></td>
+        <td><%= user.nationality %></td>
+        <td><%= user.gender %></td>
+        <td><%= user.is_admin? ? "Yes" : "No" %></td>
+        <td>
+          <%= link_to "Show", user_path(user), class: "btn btn-sm btn-info" %>
+          <%= link_to "Edit", edit_user_path(user), class: "btn btn-sm btn-warning" %>
+          <%= link_to "Delete", user_path(user), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+        </td>
       </tr>
     <% end %>
   </tbody>

@@ -1,16 +1,29 @@
 <h1 class="mb-4">Badges</h1>
+
+<div class="mb-3">
+  <%= link_to "New Badge", new_badge_path, class: "btn btn-primary" %>
+</div>
+
 <div class="row">
   <% @badges.each do |badge| %>
     <div class="col-md-4 mb-3">
-      <div class="card h-100">
+      <div class="card h-100 shadow-sm">
         <% if badge.logo.present? %>
           <img src="<%= badge.logo %>" class="card-img-top p-3" alt="<%= badge.name %>">
         <% end %>
-        <div class="card-body">
-          <h5 class="card-title"><%= link_to badge.name, badge, class: "stretched-link text-decoration-none" %></h5>
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">
+            <%= link_to badge.name, badge, class: "stretched-link text-decoration-none" %>
+          </h5>
           <p class="card-text small text-muted mb-1"><strong>Type:</strong> <%= badge.badge_type %></p>
           <p class="card-text"><%= badge.description %></p>
           <p class="card-text small"><strong>Requirement:</strong> <%= badge.requirement %></p>
+
+          <div class="mt-auto d-flex justify-content-between">
+            <%= link_to "Show", badge_path(badge), class: "btn btn-sm btn-info" %>
+            <%= link_to "Edit", edit_badge_path(badge), class: "btn btn-sm btn-warning" %>
+            <%= link_to "Delete", badge_path(badge), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+          </div>
         </div>
       </div>
     </div>

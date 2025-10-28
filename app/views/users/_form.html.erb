@@ -1,0 +1,47 @@
+<%= form_with(model: @user, local: true) do |form| %>
+  <% if @user.errors.any? %>
+    <div class="alert alert-danger">
+      <h4 class="alert-heading">Please fix the following errors:</h4>
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, "Full Name", class: "form-label" %>
+    <%= form.text_field :name, class: "form-control", placeholder: "Enter your full name", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :password, "Password", class: "form-label" %>
+    <%= form.password_field :password, class: "form-control", placeholder: "Enter a secure password", required: true %>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-4">
+      <%= form.label :birthday, "Birthday", class: "form-label" %>
+      <%= form.date_field :birthday, class: "form-control", required: true %>
+    </div>
+    <div class="col-md-4">
+      <%= form.label :nationality, "Nationality", class: "form-label" %>
+      <%= form.text_field :nationality, class: "form-control", placeholder: "e.g. USA, Chile", required: true %>
+    </div>
+    <div class="col-md-4">
+      <%= form.label :gender, "Gender", class: "form-label" %>
+      <%= form.select :gender, [["Male", "M"], ["Female", "F"], ["Other", "O"]], { prompt: "Select gender" }, class: "form-select", required: true %>
+    </div>
+  </div>
+
+  <div class="form-check mb-3">
+    <%= form.check_box :is_admin, class: "form-check-input" %>
+    <%= form.label :is_admin, "Administrator", class: "form-check-label" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", users_path, class: "btn btn-secondary ms-2" %>
+  </div>
+<% end %>

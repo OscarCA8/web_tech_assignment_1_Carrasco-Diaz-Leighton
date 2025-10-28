@@ -22,7 +22,20 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="bg-light">
+    <%= render "layouts/navbar" %>
+
+    <div class="container">
+      <% flash.each do |k, v| %>
+        <div class="alert alert-<%= k == 'notice' ? 'success' : 'danger' %> alert-dismissible fade show" role="alert">
+          <%= v %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </div>
+
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </body>
 </html>

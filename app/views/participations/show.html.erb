@@ -1,0 +1,14 @@
+<h1 class="mb-4">Participation Details</h1>
+
+<div class="card">
+  <div class="card-body">
+    <p><strong>User:</strong> <%= @participation.user.name %></p>
+    <p><strong>Challenge:</strong> <%= @participation.challenge.name %></p>
+    <p><strong>Points:</strong> <%= @participation.points %></p>
+    <p><strong>Start Date:</strong> <%= @participation.date_start %></p>
+
+    <%= link_to "Edit", edit_participation_path(@participation), class: "btn btn-warning me-2" %>
+    <%= link_to "Delete", participation_path(@participation), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+    <%= link_to "Back to List", participations_path, class: "btn btn-secondary ms-2" %>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<%= form_with(model: @challenge, local: true) do |form| %>
+  <% if @challenge.errors.any? %>
+    <div class="alert alert-danger">
+      <h4 class="alert-heading">Please fix the following errors:</h4>
+      <ul>
+        <% @challenge.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, "Challenge Name", class: "form-label" %>
+    <%= form.text_field :name, class: "form-control", placeholder: "Enter challenge name", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, "Description", class: "form-label" %>
+    <%= form.text_area :description, class: "form-control", placeholder: "Describe the challenge", rows: 4 %>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <%= form.label :start_day, "Start Date", class: "form-label" %>
+      <%= form.date_field :start_day, class: "form-control", required: true %>
+    </div>
+    <div class="col-md-6">
+      <%= form.label :end_day, "End Date", class: "form-label" %>
+      <%= form.date_field :end_day, class: "form-control", required: true %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :point_rules, "Point Rules", class: "form-label" %>
+    <%= form.text_area :point_rules, class: "form-control", placeholder: "Explain how points are awarded", rows: 2 %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :creator_id, "Creator", class: "form-label" %>
+    <%= form.collection_select :creator_id, User.all, :id, :name, { prompt: "Select a creator" }, { class: "form-select" } %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", challenges_path, class: "btn btn-secondary ms-2" %>
+  </div>
+<% end %>

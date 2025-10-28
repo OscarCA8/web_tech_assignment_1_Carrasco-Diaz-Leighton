@@ -1,7 +1,8 @@
 # db/seeds.rb
-# Rails 8 – idempotente y alineado a tu schema/models
+# Rails 8 — Idempotent and aligned with your schema/models
 
 require "date"
+
 ActiveRecord::Base.transaction do
   puts "Seeding users..."
   admin = User.find_or_create_by!(name: "Messi") do |u|
@@ -12,7 +13,7 @@ ActiveRecord::Base.transaction do
     u.is_admin = true
   end
 
-  user1 = User.find_or_create_by!(name: "Nicolás Leighton") do |u|
+  user1 = User.find_or_create_by!(name: "Nicolas Leighton") do |u|
     u.password = "password"
     u.birthday = Date.new(2002, 3, 15)
     u.nationality = "Chile"
@@ -28,7 +29,7 @@ ActiveRecord::Base.transaction do
     u.is_admin = false
   end
 
-  user3 = User.find_or_create_by!(name: "Lebron") do |u|
+  user3 = User.find_or_create_by!(name: "LeBron") do |u|
     u.password = "Sunshine"
     u.birthday = Date.new(1984, 12, 30)
     u.nationality = "USA"
@@ -37,78 +38,78 @@ ActiveRecord::Base.transaction do
   end
 
   puts "Seeding badges..."
-  b1 = Badge.find_or_create_by!(name: "Primer Desafío") do |b|
+  b1 = Badge.find_or_create_by!(name: "First Challenge") do |b|
     b.logo = "badge_start.png"
-    b.badge_type = "participación"
-    b.description = "Completaste tu primer desafío"
-    b.requirement = "Participar en cualquier desafío"
+    b.badge_type = "participation"
+    b.description = "You completed your first challenge"
+    b.requirement = "Join any challenge"
   end
 
   b2 = Badge.find_or_create_by!(name: "Top Runner") do |b|
     b.logo = "badge_runner.png"
-    b.badge_type = "rendimiento"
-    b.description = "Termina en el top 3 de un challenge de correr"
-    b.requirement = "Top 3 en challenge de correr"
+    b.badge_type = "performance"
+    b.description = "Finish in the top 3 of a running challenge"
+    b.requirement = "Top 3 in a running challenge"
   end
 
-  b3 = Badge.find_or_create_by!(name: "Constante") do |b|
+  b3 = Badge.find_or_create_by!(name: "Consistent") do |b|
     b.logo = "badge_streak.png"
-    b.badge_type = "participación"
-    b.description = "Participa por 7 días seguidos"
-    b.requirement = "7 días consecutivos con progreso"
+    b.badge_type = "participation"
+    b.description = "Participate for 7 consecutive days"
+    b.requirement = "7 consecutive days with progress"
   end
 
   puts "Seeding challenges..."
-  c1 = Challenge.find_or_create_by!(name: "Desafío Semanal Running") do |c|
-    c.description = "Corre 10 kilómetros a lo largo de la semana"
+  c1 = Challenge.find_or_create_by!(name: "Weekly Running Challenge") do |c|
+    c.description = "Run 10 kilometers throughout the week"
     c.start_day   = Date.today
     c.end_day     = Date.today + 7
-    c.point_rules = "1 punto por km corrido"
+    c.point_rules = "1 point per kilometer run"
     c.creator     = admin
   end
 
-  c2 = Challenge.find_or_create_by!(name: "Reto de Bicicleta") do |c|
-    c.description = "Recorre 50 km en una semana"
+  c2 = Challenge.find_or_create_by!(name: "Cycling Challenge") do |c|
+    c.description = "Cycle 50 km in one week"
     c.start_day   = Date.today
     c.end_day     = Date.today + 7
-    c.point_rules = "1 punto por cada km completado"
+    c.point_rules = "1 point per km completed"
     c.creator     = admin
   end
 
   puts "Linking challenge badges..."
   ChallengeBadge.find_or_create_by!(challenge: c1, badge: b2) do |cb|
-    cb.requirement = "Top 3 semanal en running"
+    cb.requirement = "Top 3 weekly in running"
   end
   ChallengeBadge.find_or_create_by!(challenge: c2, badge: b3) do |cb|
-    cb.requirement = "7 días seguidos con progreso"
+    cb.requirement = "7 consecutive days with progress"
   end
 
   puts "Seeding participations..."
   Participation.find_or_create_by!(challenge: c1, user: user1) do |p|
     p.points     = 120
-    p.date_start = Date.today - 1
+    p.date_start = c1.start_day
   end
   Participation.find_or_create_by!(challenge: c1, user: user2) do |p|
     p.points     = 80
-    p.date_start = Date.today - 1
+    p.date_start = c1.start_day
   end
   Participation.find_or_create_by!(challenge: c2, user: user3) do |p|
     p.points     = 60
-    p.date_start = Date.today - 1
+    p.date_start = c2.start_day
   end
 
   puts "Seeding progress entries..."
-  ProgressEntry.find_or_create_by!(challenge: c1, user: user1, date: Date.today) do |e|
+  ProgressEntry.find_or_create_by!(challenge: c1, user: user1, date: c1.start_day + 1) do |e|
     e.points = 20
-    e.description = "Corrí 5 km"
+    e.description = "Ran 5 km"
   end
-  ProgressEntry.find_or_create_by!(challenge: c1, user: user2, date: Date.today) do |e|
+  ProgressEntry.find_or_create_by!(challenge: c1, user: user2, date: c1.start_day + 1) do |e|
     e.points = 10
-    e.description = "Corrí 2.5 km"
+    e.description = "Ran 2.5 km"
   end
-  ProgressEntry.find_or_create_by!(challenge: c2, user: user3, date: Date.today) do |e|
+  ProgressEntry.find_or_create_by!(challenge: c2, user: user3, date: c2.start_day + 1) do |e|
     e.points = 15
-    e.description = "Anduve 15 km en bici"
+    e.description = "Cycled 15 km"
   end
 
   puts "Assigning user badges..."
@@ -117,9 +118,9 @@ ActiveRecord::Base.transaction do
   UserBadge.find_or_create_by!(user: user3, badge: b1) { |ub| ub.awarded_at = Time.now }
 
   puts "Seeding notifications..."
-  Notification.find_or_create_by!(user: user1, message: "Ganaste la medalla 'Primer Desafío'!") { |n| n.read = false }
-  Notification.find_or_create_by!(user: user2, message: "Tienes nuevo desafío disponible") { |n| n.read = false }
-  Notification.find_or_create_by!(user: user3, message: "Completaste tu reto de bicicleta") { |n| n.read = true }
+  Notification.find_or_create_by!(user: user1, message: "You earned the 'First Challenge' badge!") { |n| n.read = false }
+  Notification.find_or_create_by!(user: user2, message: "A new challenge is available!") { |n| n.read = false }
+  Notification.find_or_create_by!(user: user3, message: "You completed your cycling challenge!") { |n| n.read = true }
 
   puts "Seed data created successfully!"
 end

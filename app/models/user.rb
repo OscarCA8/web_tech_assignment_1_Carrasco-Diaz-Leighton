@@ -1,12 +1,16 @@
 class User < ApplicationRecord
+  has_many :participations, dependent: :destroy
+  has_many :challenges, through: :participations
+  has_many :notifications, dependent: :destroy
+  has_many :progress_entries, dependent: :destroy
+  has_many :user_badges, dependent: :destroy
+  has_many :badges, through: :user_badges
+
   has_secure_password
 
-  has_many :created_challenges, class_name: "Challenge", foreign_key: "creator_id"
-  has_many :participations
-  has_many :challenges, through: :participations
-  has_many :progress_entries
-  has_many :notifications
-  has_many :user_badges
-  has_many :badges, through: :user_badges
+  validates :name, presence: true, length: { minimum: 3 }
+  validates :password, presence: true, length: { minimum: 4 }, if: :password_digest_changed?
+  validates :birthday, presence: true
+  validates :nationality, presence: true
+  validates :gender, inclusion: { in: %w[M F O], message: "must be M, F, or O" }
 end
-

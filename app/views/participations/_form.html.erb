@@ -1,0 +1,37 @@
+<%= form_with(model: @participation, local: true) do |f| %>
+  <% if @participation.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(@participation.errors.count, "error") %> prohibited this participation from being saved:</h4>
+      <ul>
+        <% @participation.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.label :user_id, "User" %>
+    <%= f.collection_select :user_id, @users, :id, :name, { prompt: "Select User" }, { class: "form-select", required: true } %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :challenge_id, "Challenge" %>
+    <%= f.collection_select :challenge_id, @challenges, :id, :name, { prompt: "Select Challenge" }, { class: "form-select", required: true } %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :points, "Points" %>
+    <%= f.number_field :points, class: "form-control", min: 0, step: 1, required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :date_start, "Start Date" %>
+    <%= f.date_field :date_start, class: "form-control", required: true %>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <%= f.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", participations_path, class: "btn btn-outline-secondary" %>
+  </div>
+<% end %>

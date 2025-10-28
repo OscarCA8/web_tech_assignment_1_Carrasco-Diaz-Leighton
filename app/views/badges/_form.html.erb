@@ -1,0 +1,41 @@
+<%= form_with(model: @badge, local: true) do |form| %>
+  <% if @badge.errors.any? %>
+    <div class="alert alert-danger">
+      <ul>
+        <% @badge.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, "Badge Name", class: "form-label" %>
+    <%= form.text_field :name, class: "form-control", placeholder: "Enter badge name", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :logo, "Badge Logo Filename", class: "form-label" %>
+    <%= form.text_field :logo, class: "form-control", placeholder: "e.g. badge.png" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :badge_type, "Badge Type", class: "form-label" %>
+    <%= form.select :badge_type, ["Participation", "Achievement", "Performance"], { prompt: "Select badge type" }, class: "form-select", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, "Description", class: "form-label" %>
+    <%= form.text_area :description, class: "form-control", placeholder: "Describe the badge", rows: 3 %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :requirement, "Requirement", class: "form-label" %>
+    <%= form.text_field :requirement, class: "form-control", placeholder: "e.g. Complete 3 challenges", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", badges_path, class: "btn btn-secondary ms-2" %>
+  </div>
+<% end %>
