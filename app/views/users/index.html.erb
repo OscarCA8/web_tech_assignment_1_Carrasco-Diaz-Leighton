@@ -23,7 +23,7 @@
         <td>
           <%= link_to "Show", user_path(user), class: "btn btn-sm btn-info" %>
           <%= link_to "Edit", edit_user_path(user), class: "btn btn-sm btn-warning" %>
-          <%= link_to "Delete", user_path(user), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-danger" %>
+          <%= link_to "Delete", user_path(user), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
         </td>
       </tr>
     <% end %>

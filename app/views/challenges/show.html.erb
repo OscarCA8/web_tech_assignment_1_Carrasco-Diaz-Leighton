@@ -26,10 +26,9 @@
           <% end %>
         <% end %>
 
-        <% if current_user && (current_user == @challenge.creator || current_user.is_admin?) %>
-          <%= link_to "Edit Challenge", edit_challenge_path(@challenge), class: "btn btn-warning me-2" %>
-          <%= link_to "Delete Challenge", challenge_path(@challenge), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
-        <% end %>
+        
+        <%= link_to "Edit Challenge", edit_challenge_path(@challenge), class: "btn btn-warning me-2" %>
+        <%= link_to "Delete", challenge_path(@challenge), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
       </div>
     </div>
   </div>
