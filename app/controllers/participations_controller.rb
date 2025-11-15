@@ -1,6 +1,7 @@
 class ParticipationsController < ApplicationController
   before_action :set_participation, only: [:show, :edit, :update, :destroy]
   before_action :set_users_and_challenges, only: [:new, :edit, :create, :update]
+  before_action :authenticate_user!
 
   def index
     @participations = Participation.all.includes(:user, :challenge)
@@ -11,6 +12,11 @@ class ParticipationsController < ApplicationController
 
   def new
     @participation = Participation.new
+    if params[:challenge_id].present?
+      @participation.challenge = Challenge.find(params[:challenge_id])
+    end
+
+    @participation.user = current_user
   end
 
   def create

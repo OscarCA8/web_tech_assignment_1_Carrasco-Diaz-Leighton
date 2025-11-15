@@ -1,6 +1,7 @@
 class ChallengesController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_challenge, only: [:show, :edit, :update, :destroy, :join, :leave]
-
+  
   def index
     @challenges = if params[:query].present?
                     Challenge.where("name ILIKE ?", "%#{params[:query]}%").includes(:creator)
@@ -45,13 +46,9 @@ class ChallengesController < ApplicationController
   end
 
   def join
-    unless current_user && @challenge.users.exists?(current_user.id)
-      Participation.create!(user: current_user, challenge: @challenge, date_start: Date.today, points: 0)
-      redirect_to @challenge, notice: "Joined challenge."
-    else
-      redirect_to @challenge, alert: "Already participating."
-    end
+    redirect_to new_participation_path(challenge_id: @challenge.id)
   end
+
 
   def leave
     participation = Participation.find_by(user: current_user, challenge: @challenge)

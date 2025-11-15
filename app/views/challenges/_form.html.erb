@@ -37,11 +37,6 @@
   </div>
 
   <div class="mb-3">
-    <%= form.label :creator_id, "Creator", class: "form-label" %>
-    <%= form.collection_select :creator_id, User.all, :id, :name, { prompt: "Select a creator" }, { class: "form-select" } %>
-  </div>
-
-  <div class="mb-3">
     <%= form.submit class: "btn btn-primary" %>
     <%= link_to "Cancel", challenges_path, class: "btn btn-secondary ms-2" %>
   </div>

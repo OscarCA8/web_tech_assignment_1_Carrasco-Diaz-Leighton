@@ -1,6 +1,7 @@
 class ProgressEntriesController < ApplicationController
   before_action :set_progress_entry, only: [:show, :edit, :update, :destroy]
   before_action :set_challenge, only: [:index, :new, :create]
+  before_action :authenticate_user!
 
   def index
     @progress_entries = if @challenge

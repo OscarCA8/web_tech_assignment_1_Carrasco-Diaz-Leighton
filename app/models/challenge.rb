@@ -1,6 +1,7 @@
 class Challenge < ApplicationRecord
   belongs_to :creator, class_name: "User"
   has_many :participations, dependent: :destroy
+  has_many :users, through: :participations
   has_many :progress_entries, dependent: :destroy
   has_many :challenge_badges, dependent: :destroy
   has_many :badges, through: :challenge_badges

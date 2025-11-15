@@ -15,10 +15,23 @@
       </ul>
 
       <ul class="navbar-nav">
-        <% if current_user %>
-          <li class="nav-item"><%= link_to current_user.name, user_path(current_user), class: "nav-link" %></li>
+        <% if user_signed_in? %>
           <li class="nav-item">
-            <%= button_to "Logout", logout_path, method: :delete, class: "btn btn-outline-light btn-sm" %>
+            <%= link_to (current_user.name.presence || current_user.email), user_path(current_user), class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= button_to "Logout",
+                          destroy_user_session_path,
+                          method: :delete,
+                          class: "btn btn-outline-light btn-sm",
+                          form: { class: "d-inline" } %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "Login", new_user_session_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Sign up", new_user_registration_path, class: "btn btn-outline-light btn-sm ms-2" %>
           </li>
         <% end %>
       </ul>

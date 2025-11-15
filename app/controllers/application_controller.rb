@@ -1,18 +1,16 @@
 class ApplicationController < ActionController::Base
-  helper_method :current_user
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
-  private
+  protected
 
-  def current_user
-    return @current_user if defined?(@current_user)
-    @current_user = User.find_by(id: session[:user_id]) if session[:user_id]
-  end
+  def configure_permitted_parameters
+    extra_attrs = [:name, :birthday, :nationality, :gender]
 
-  def require_login
-    redirect_to login_path, alert: "Please log in" unless current_user
+    devise_parameter_sanitizer.permit(:sign_up, keys: extra_attrs)
+    devise_parameter_sanitizer.permit(:account_update, keys: extra_attrs)
   end
 
   def require_admin
-    redirect_to root_path, alert: "Not authorized" unless current_user&.is_admin?
+    redirect_to root_path, alert: "Not authorized" unless user_signed_in? && current_user.is_admin?
   end
 end
