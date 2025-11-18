@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :toggle_admin]
   before_action :authenticate_user!
+  before_action :authorize_user!, only: [:edit, :update, :destroy]
+  before_action :authorize_users_index, only: [:index]
 
   def index
     @users = User.order(:name)
@@ -40,6 +42,20 @@ class UsersController < ApplicationController
     redirect_to users_path, notice: "User removed."
   end
 
+  def toggle_admin
+    # Only admins may toggle admin status.
+    unless current_user&.is_admin?
+      raise CanCan::AccessDenied.new("Not authorized", :manage, User)
+    end
+    # Flip the is_admin boolean
+    @user.is_admin = !@user.is_admin?
+    if @user.save
+      redirect_back fallback_location: users_path, notice: "User admin status updated."
+    else
+      redirect_back fallback_location: users_path, alert: "Could not update admin status: #{@user.errors.full_messages.join(', ')}"
+    end
+  end
+
   private
 
   def set_user
@@ -47,6 +63,16 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :password, :birthday, :nationality, :gender, :is_admin)
+    permitted = [:name, :password, :birthday, :nationality, :gender]
+    permitted << :is_admin if current_user && current_user.is_admin?
+    params.require(:user).permit(permitted)
+  end
+
+  def authorize_user!
+    authorize! :manage, @user
+  end
+
+  def authorize_users_index
+    authorize! :read, User
   end
 end

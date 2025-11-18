@@ -12,7 +12,11 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  resources :users, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  resources :users, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+    member do
+      patch :toggle_admin
+    end
+  end
   resources :challenges do
     resources :progress_entries, only: [:index, :new, :create]
     resources :challenge_badges, only: [:index]
@@ -26,7 +30,11 @@ Rails.application.routes.draw do
   resources :badges
   resources :participations
   resources :user_badges, only: [:index]
-  resources :notifications, only: [:index, :show, :destroy]
+  resources :notifications, only: [:index, :show, :destroy] do
+    collection do
+      patch :mark_all_read
+    end
+  end
   root "challenges#index"
 
   # get "/login", to: "sessions#new"

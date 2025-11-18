@@ -29,7 +29,9 @@
     <% end %>
 
     <div>
-      <%= link_to "Edit Profile", edit_user_path(@user), class: "btn btn-warning me-2" %>
+      <% if can?(:manage, @user) %>
+        <%= link_to "Edit Profile", edit_user_path(@user), class: "btn btn-warning me-2" %>
+      <% end %>
       <%= link_to "Back to Users", users_path, class: "btn btn-secondary" %>
     </div>
   </div>

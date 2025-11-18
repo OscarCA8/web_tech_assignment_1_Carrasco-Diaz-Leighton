@@ -33,8 +33,10 @@
           <div class="mt-auto d-flex flex-wrap gap-2">
             <div>
               <%= link_to "Show", challenge_path(c), class: "btn btn-sm btn-info" %>
-              <%= link_to "Edit", edit_challenge_path(c), class: "btn btn-sm btn-warning" %>
-              <%= link_to "Delete", challenge_path(c), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+              <% if can?(:manage, c) %>
+                <%= link_to "Edit", edit_challenge_path(c), class: "btn btn-sm btn-warning" %>
+                <%= link_to "Delete", challenge_path(c), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+              <% end %>
             </div>
             <% if current_user %>
               <% if current_user.participations.exists?(challenge: c) %>

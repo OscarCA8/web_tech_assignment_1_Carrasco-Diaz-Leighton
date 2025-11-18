@@ -27,8 +27,10 @@
         <% end %>
 
         
-        <%= link_to "Edit Challenge", edit_challenge_path(@challenge), class: "btn btn-warning me-2" %>
-        <%= link_to "Delete", challenge_path(@challenge), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+        <% if can?(:manage, @challenge) %>
+          <%= link_to "Edit Challenge", edit_challenge_path(@challenge), class: "btn btn-warning me-2" %>
+          <%= link_to "Delete", challenge_path(@challenge), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+        <% end %>
       </div>
     </div>
   </div>
@@ -60,7 +62,7 @@
       <% @challenge.participations.each do |p| %>
         <li class="list-group-item d-flex justify-content-between align-items-center">
           <%= p.user.name %> - <strong>Points:</strong> <%= p.points %>
-          <% if current_user && (current_user == @challenge.creator || current_user.is_admin?) %>
+          <% if can?(:manage, @challenge) || can?(:manage, p) %>
             <%= link_to "Remove", participation_path(p), method: :delete, data: { confirm: "Remove this participant?" }, class: "btn btn-sm btn-danger" %>
           <% end %>
         </li>

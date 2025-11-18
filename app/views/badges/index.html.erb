@@ -21,8 +21,10 @@
 
           <div class="mt-auto d-flex justify-content-between">
             <%= link_to "Show", badge_path(badge), class: "btn btn-sm btn-info" %>
-            <%= link_to "Edit", edit_badge_path(badge), class: "btn btn-sm btn-warning" %>
-            <%= link_to "Delete", badge_path(badge), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+            <% if can?(:manage, badge) %>
+              <%= link_to "Edit", edit_badge_path(badge), class: "btn btn-sm btn-warning" %>
+              <%= link_to "Delete", badge_path(badge), class: "btn btn-sm btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+            <% end %>
           </div>
         </div>
       </div>

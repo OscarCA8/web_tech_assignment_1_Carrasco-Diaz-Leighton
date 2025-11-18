@@ -2,6 +2,8 @@ class ParticipationsController < ApplicationController
   before_action :set_participation, only: [:show, :edit, :update, :destroy]
   before_action :set_users_and_challenges, only: [:new, :edit, :create, :update]
   before_action :authenticate_user!
+  before_action :authorize_participation!, only: [:edit, :update, :destroy]
+  before_action :authorize_participation_create, only: [:new, :create]
 
   def index
     @participations = Participation.all.includes(:user, :challenge)
@@ -60,5 +62,13 @@ class ParticipationsController < ApplicationController
 
   def participation_params
     params.require(:participation).permit(:user_id, :challenge_id, :points, :date_start)
+  end
+
+  def authorize_participation!
+    authorize! :manage, @participation
+  end
+
+  def authorize_participation_create
+    authorize! :create, Participation
   end
 end

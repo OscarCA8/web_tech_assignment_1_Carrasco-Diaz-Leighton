@@ -36,8 +36,10 @@
   </div>
 
   <div class="form-check mb-3">
-    <%= form.check_box :is_admin, class: "form-check-input" %>
-    <%= form.label :is_admin, "Administrator", class: "form-check-label" %>
+    <% if current_user&.is_admin? %>
+      <%= form.check_box :is_admin, class: "form-check-input" %>
+      <%= form.label :is_admin, "Administrator", class: "form-check-label" %>
+    <% end %>
   </div>
 
   <div class="mb-3">

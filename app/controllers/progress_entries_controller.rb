@@ -2,6 +2,8 @@ class ProgressEntriesController < ApplicationController
   before_action :set_progress_entry, only: [:show, :edit, :update, :destroy]
   before_action :set_challenge, only: [:index, :new, :create]
   before_action :authenticate_user!
+  before_action :authorize_progress_entry!, only: [:edit, :update, :destroy]
+  before_action :authorize_progress_entry_create, only: [:new, :create]
 
   def index
     @progress_entries = if @challenge
@@ -54,5 +56,13 @@ class ProgressEntriesController < ApplicationController
 
   def progress_entry_params
     params.require(:progress_entry).permit(:date, :points, :description)
+  end
+
+  def authorize_progress_entry!
+    authorize! :manage, @progress_entry
+  end
+
+  def authorize_progress_entry_create
+    authorize! :create, ProgressEntry
   end
 end

@@ -67,3 +67,7 @@ end
 gem "bcrypt", "~> 3.1"
 
 gem "devise", "~> 4.9"
+
+gem "cancancan", "~> 3.3"
+
+gem "responders", "~> 3.2"

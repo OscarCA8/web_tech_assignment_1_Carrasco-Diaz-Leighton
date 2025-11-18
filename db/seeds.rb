@@ -5,37 +5,50 @@ require "date"
 
 ActiveRecord::Base.transaction do
   puts "Seeding users..."
-  admin = User.find_or_create_by!(name: "Messi") do |u|
-    u.password = "Maradona"
-    u.birthday = Date.new(1987, 6, 27)
-    u.nationality = "Argentina"
-    u.gender = "M"
-    u.is_admin = true
-  end
+  admin = User.find_or_initialize_by(email: "admin@example.com")
+  admin.name = "Chuck Norris"
+  admin.password = "password123"
+  admin.birthday ||= Date.new(1980, 1, 1)
+  admin.nationality ||= "Local"
+  admin.gender ||= "O"
+  admin.is_admin = true
+  admin.save!
 
-  user1 = User.find_or_create_by!(name: "Nicolas Leighton") do |u|
-    u.password = "password"
-    u.birthday = Date.new(2002, 3, 15)
-    u.nationality = "Chile"
-    u.gender = "M"
-    u.is_admin = false
-  end
+  regular = User.find_or_initialize_by(email: "user@example.com")
+  regular.name = "Pedro Flintstone"
+  regular.password = "password123"
+  regular.birthday ||= Date.new(1995, 1, 1)
+  regular.nationality ||= "Local"
+  regular.gender ||= "O"
+  regular.is_admin = false
+  regular.save!
 
-  user2 = User.find_or_create_by!(name: "Shakira") do |u|
-    u.password = "WakaWaka"
-    u.birthday = Date.new(1977, 2, 2)
-    u.nationality = "Colombia"
-    u.gender = "F"
-    u.is_admin = false
-  end
+  user1 = User.find_or_initialize_by(email: "nicolas.leighton@example.com")
+  user1.name = "Nicolas Leighton"
+  user1.password = "password"
+  user1.birthday = Date.new(2002, 3, 15)
+  user1.nationality = "Chile"
+  user1.gender = "M"
+  user1.is_admin = false
+  user1.save!
 
-  user3 = User.find_or_create_by!(name: "LeBron") do |u|
-    u.password = "Sunshine"
-    u.birthday = Date.new(1984, 12, 30)
-    u.nationality = "USA"
-    u.gender = "M"
-    u.is_admin = false
-  end
+  user2 = User.find_or_initialize_by(email: "shakira@example.com")
+  user2.name = "Shakira"
+  user2.password = "WakaWaka"
+  user2.birthday = Date.new(1977, 2, 2)
+  user2.nationality = "Colombia"
+  user2.gender = "F"
+  user2.is_admin = false
+  user2.save!
+
+  user3 = User.find_or_initialize_by(email: "lebron@example.com")
+  user3.name = "LeBron"
+  user3.password = "Sunshine"
+  user3.birthday = Date.new(1984, 12, 30)
+  user3.nationality = "USA"
+  user3.gender = "M"
+  user3.is_admin = false
+  user3.save!
 
   puts "Seeding badges..."
   b1 = Badge.find_or_create_by!(name: "First Challenge") do |b|

@@ -86,6 +86,7 @@ GEM
     brakeman (7.1.0)
       racc
     builder (3.3.0)
+    cancancan (3.6.1)
     capybara (3.40.0)
       addressable
       matrix
@@ -378,6 +379,7 @@ DEPENDENCIES
   bcrypt (~> 3.1)
   bootsnap
   brakeman
+  cancancan (~> 3.3)
   capybara
   cssbundling-rails
   debug
@@ -389,6 +391,7 @@ DEPENDENCIES
   propshaft
   puma (>= 5.0)
   rails (~> 8.0.3)
+  responders (~> 3.2)
   rubocop-rails-omakase
   selenium-webdriver
   solid_cable

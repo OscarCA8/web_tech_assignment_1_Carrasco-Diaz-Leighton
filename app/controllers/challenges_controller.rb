@@ -1,6 +1,8 @@
 class ChallengesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_challenge, only: [:show, :edit, :update, :destroy, :join, :leave]
+  before_action :authorize_challenge!, only: [:edit, :update, :destroy]
+  before_action :authorize_challenge_create, only: [:new, :create]
   
   def index
     @challenges = if params[:query].present?
@@ -68,5 +70,13 @@ class ChallengesController < ApplicationController
 
   def challenge_params
     params.require(:challenge).permit(:name, :description, :start_day, :end_day, :point_rules)
+  end
+
+  def authorize_challenge!
+    authorize! :manage, @challenge
+  end
+
+  def authorize_challenge_create
+    authorize! :create, Challenge
   end
 end

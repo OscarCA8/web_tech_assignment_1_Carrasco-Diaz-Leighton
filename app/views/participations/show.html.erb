@@ -7,8 +7,10 @@
     <p><strong>Points:</strong> <%= @participation.points %></p>
     <p><strong>Start Date:</strong> <%= @participation.date_start %></p>
 
-    <%= link_to "Edit", edit_participation_path(@participation), class: "btn btn-warning me-2" %>
-    <%= link_to "Delete", participation_path(@participation), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+    <% if can?(:manage, @participation) %>
+      <%= link_to "Edit", edit_participation_path(@participation), class: "btn btn-warning me-2" %>
+      <%= link_to "Delete", participation_path(@participation), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+    <% end %>
     <%= link_to "Back to List", participations_path, class: "btn btn-secondary ms-2" %>
   </div>
 </div>

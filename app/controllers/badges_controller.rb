@@ -1,6 +1,7 @@
 class BadgesController < ApplicationController
   before_action :set_badge, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :authorize_badge!, only: [:new, :create, :edit, :update, :destroy]
 
   def index
     @badges = Badge.order(:name)
@@ -47,5 +48,14 @@ class BadgesController < ApplicationController
 
   def badge_params
     params.require(:badge).permit(:name, :logo, :badge_type, :description, :requirement)
+  end
+
+  def authorize_badge!
+    # For actions where @badge is present, authorize management; otherwise check class-level create
+    if defined?(@badge) && @badge
+      authorize! :manage, @badge
+    else
+      authorize! :create, Badge
+    end
   end
 end
