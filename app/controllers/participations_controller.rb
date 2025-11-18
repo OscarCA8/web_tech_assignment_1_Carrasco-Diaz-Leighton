@@ -23,11 +23,34 @@ class ParticipationsController < ApplicationController
 
   def create
     @participation = Participation.new(participation_params)
-    if @participation.save
-      redirect_to participations_path, notice: "Participation successfully created!"
-    else
-      render :new, status: :unprocessable_entity
+
+    ActiveRecord::Base.transaction do
+      if @participation.save
+        # create an initial progress entry for this participant on their start date
+        pe = ProgressEntry.new(
+          user: @participation.user,
+          challenge: @participation.challenge,
+          date: @participation.date_start,
+          points: @participation.points,
+          description: "Joined challenge"
+        )
+
+        unless pe.save
+          # surface progress entry validation errors on the participation form
+          pe.errors.full_messages.each { |m| @participation.errors.add(:base, "Progress entry: #{m}") }
+          raise ActiveRecord::Rollback
+        end
+
+        redirect_to challenge_path(@participation.challenge), notice: "Participation created and progress entry added."
+        return
+      else
+        render :new, status: :unprocessable_entity
+        return
+      end
     end
+
+    # If we reach here the transaction was rolled back due to progress entry errors
+    render :new, status: :unprocessable_entity
   end
 
   def edit
