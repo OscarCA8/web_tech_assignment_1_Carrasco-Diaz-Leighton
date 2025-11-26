@@ -30,7 +30,15 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update(user_params)
+    attrs = user_params.to_h
+    if attrs['password'].blank?
+      attrs.delete('password')
+    end
+
+    if @user.update(attrs)
+      if @user == current_user
+        bypass_sign_in(@user)
+      end
       redirect_to @user, notice: "Profile updated."
     else
       render :edit, status: :unprocessable_entity
